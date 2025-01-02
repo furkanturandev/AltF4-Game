@@ -9,8 +9,10 @@ pygame.mixer.init()
 import pygame
 import sys
 
+# Pygame başlatma
+pygame.init()
 
-# ANA MENÜ İÇİN GEREKLİ KODLAR
+
 
 # Ekran boyutu ve renkler
 screen_width = 800
@@ -71,7 +73,6 @@ def show_menu():
 show_menu()  # Menü göster
 
 
-# ANA MENÜ İÇİN GEREKLİ KODLAR SONU
 
 
 
