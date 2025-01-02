@@ -6,6 +6,75 @@ import pygame #sesleri eklmeke için kullandım
 #mixeri aç
 pygame.mixer.init() 
 
+import pygame
+import sys
+
+
+# ANA MENÜ İÇİN GEREKLİ KODLAR
+
+# Ekran boyutu ve renkler
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Space Game with Menu")
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+
+# Fontlar
+font = pygame.font.SysFont("Arial", 40)
+small_font = pygame.font.SysFont("Arial", 30)
+
+# Oyun değişkenleri
+game_running = False
+
+# Ana menü fonksiyonu
+def show_menu():
+    global game_running
+    while True:
+        screen.fill(BLACK)  # Ekranı siyah yap
+        # Menü başlığı
+        title_text = font.render("Space Game", True, WHITE)
+        screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 100))
+
+        # Başlat butonu
+        start_button = pygame.Rect(screen_width / 2 - 100, 250, 200, 50)
+        pygame.draw.rect(screen, GREEN, start_button)
+        start_text = small_font.render("Start Game", True, BLACK)
+        screen.blit(start_text, (screen_width / 2 - start_text.get_width() / 2, 260))
+
+        # Çıkış butonu
+        exit_button = pygame.Rect(screen_width / 2 - 100, 350, 200, 50)
+        pygame.draw.rect(screen, RED, exit_button)
+        exit_text = small_font.render("Exit Game", True, BLACK)
+        screen.blit(exit_text, (screen_width / 2 - exit_text.get_width() / 2, 360))
+
+        pygame.display.flip()  # Ekranı güncelle
+
+        # Kullanıcı etkileşimi
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.collidepoint(event.pos):  # Başlat butonuna tıklanmışsa
+                    game_running = True
+                    return  # Menü ekranından çık ve oyunu başlat
+                if exit_button.collidepoint(event.pos):  # Çıkış butonuna tıklanmışsa
+                    pygame.quit()
+                    sys.exit()
+
+
+# Program başlangıcı
+show_menu()  # Menü göster
+
+
+# ANA MENÜ İÇİN GEREKLİ KODLAR SONU
+
+
+
 #ses dosyaları
 explosion_sound = pygame.mixer.Sound("explosion.mp3")
 hyperspace_sound = pygame.mixer.Sound("hyperspace.mp3")
@@ -244,7 +313,7 @@ class Game():
 		self.pen = turtle.Turtle()
 		self.lives = 1000
 		# self.level_thresholds = [300, 800, 1200, 1700]  # Define score thresholds for levels
-		self.level_thresholds = [100, 300, 400, 500] # dev environment
+		self.level_thresholds = [100, 300, 1200, 1700] # dev environment
 		self.enemies = []
 		
 	def draw_border(self):
@@ -274,7 +343,7 @@ class Game():
 		if self.level < len(self.level_thresholds) and self.score >= self.level_thresholds[self.level - 1]:
 			# Önceki leveldeki düşmanların rengini beyaz yap
 			for enemy in self.enemies:
-				enemy.color("white")
+				enemy.color("gray")
 			
 			self.level += 1
 			self.show_status()
