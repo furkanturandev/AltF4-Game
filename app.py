@@ -26,9 +26,9 @@ def start_game1():
 	def play_laser_sound():
 		laser_sound.play()
 		
-
 	def play_missile_sound():
 		missile_sound.play()
+
 	#Required on Mac to create turtle window
 	turtle.fd(0)
 	#Max animation speed
