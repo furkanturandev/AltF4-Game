@@ -88,6 +88,7 @@ def start_game1():
 				self.rt(60)
 				self.sety(290)
 
+
 	class Player(Sprite):
 		def __init__(self, spriteshape, color, startx, starty):
 			Sprite.__init__(self, spriteshape, color, startx, starty)
@@ -116,6 +117,7 @@ def start_game1():
 			self.setheading(random.randint(0,360))
 			self.speed *= 0.5
 			
+
 	class Enemy(Sprite):
 		def __init__(self, spriteshape, color, startx, starty):
 			Sprite.__init__(self, spriteshape, color, startx, starty)
@@ -141,6 +143,7 @@ def start_game1():
 		def reset_position(self):
 			self.goto(random.randint(-200, 200), random.randint(-200, 200))
 			self.color("red")
+
 
 	class Ally(Sprite):
 		def __init__(self, spriteshape, color, startx, starty):
