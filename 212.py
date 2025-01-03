@@ -89,7 +89,7 @@ def start_game1():
 		def __init__(self, spriteshape, color, startx, starty):
 			Sprite.__init__(self, spriteshape, color, startx, starty)
 			self.speed = 0
-			self.lives = 3
+			self.health = 3
 			self.shapesize(stretch_wid=0.6, stretch_len=1.1, outline=None)
 			
 		def turn_left(self):
@@ -244,7 +244,7 @@ def start_game1():
 			self.score = 0
 			self.state = "splash"
 			self.pen = turtle.Turtle()
-			self.lives = 500
+			self.health = 500
 			# self.level_thresholds = [300, 800, 1200, 1700]  # Define score thresholds for levels
 			self.level_thresholds = [100, 300, 1200, 1700] # dev environment
 			self.enemies = []
@@ -264,8 +264,8 @@ def start_game1():
 			
 		def show_status(self):
 			self.pen.undo()
-			if game.lives > 0:
-				msg = "Level: %s Lives: %s Score: %s " %(self.level, self.lives, self.score)		
+			if game.health > 0:
+				msg = "Level: %s Health: %s Score: %s " %(self.level, self.health, self.score)		
 			else: 
 				msg = "Game Over Score: %s" %(self.score)
 			self.pen.penup()
@@ -341,7 +341,7 @@ def start_game1():
 	while True:
 		turtle.update()
 		if game.state == "restart":
-			game.lives = 3
+			game.health = 3
 			game.score = 0
 			player.speed = 0
 			player.goto(0,0)
@@ -370,8 +370,8 @@ def start_game1():
 						particle.explode(enemy.xcor(), enemy.ycor())
 					player.rt(random.randint(100, 200))
 					enemy.reset_position()  # Reset enemy position and color
-					game.lives -= 1
-					if game.lives < 1:
+					game.health -= 1
+					if game.health < 1:
 						game.state = "gameover"
 					game.show_status()
 					player.color("white")
@@ -427,7 +427,7 @@ def start_game1():
 
 # Menü ekranını oluştur
 menu_screen = turtle.Screen()
-menu_screen.title("Alt+F4 Menu")
+menu_screen.title("Alt+F4")
 menu_screen.bgcolor("black")
 menu_screen.setup(width=600, height=600)
 
