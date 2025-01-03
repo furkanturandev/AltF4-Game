@@ -1,19 +1,18 @@
 import random
 from tkinter import messagebox
 import turtle
-import pygame #sesleri eklmeke için kullandım
-#mixeri aç
+import pygame
+
 pygame.mixer.init() 
 
-#ses dosyaları
+# Files of sounds
 explosion_sound = pygame.mixer.Sound("assets/sounds/explosion.mp3")
 hyperspace_sound = pygame.mixer.Sound("assets/sounds/hyperspace.mp3")
 laser_sound = pygame.mixer.Sound("assets/sounds/laser_V2.mp3")
 missile_sound = pygame.mixer.Sound("assets/sounds/missile.mp3")
 menu_music = pygame.mixer.Sound("assets/sounds/menu_intro.mp3")
 menu_music.play(1)
-menu_music.set_volume(0.1) #sesi kıstım
-
+menu_music.set_volume(0.1) # Sesi kısıldı
 
 
 def start_game1():
@@ -29,29 +28,35 @@ def start_game1():
 	def play_missile_sound():
 		missile_sound.play()
 
-	#Required on Mac to create turtle window
+	# Required on Mac to create turtle window
 	turtle.fd(0)
-	#Max animation speed
+
+	# Max animation speed
 	turtle.speed(10)
-	#Change the background color of the screen
+
+	# Change the background color of the screen
 	turtle.bgcolor("black")
-	#Load the background image
+
+	# Load the background image
 	turtle.bgpic("assets/images/menu_V3.png")
-	#Hide the turtle
+
+	# Hide the turtle
 	turtle.ht()
-	#Set the undo buffer to 1 (to save memory and speed things up)
+
+	# Set the undo buffer to 1 (to save memory and speed things up)
 	turtle.setundobuffer(1)
-	#Speed up drawing (Draw every 6 frames)
+
+	# Speed up drawing (Draw every 6 frames)
 	turtle.tracer(2)  # Reduce the speed of drawing
 
 
 	class Sprite(turtle.Turtle):
 		def __init__(self, spriteshape, color, startx, starty):
 			turtle.Turtle.__init__(self, shape = spriteshape)
-			# self.speed(10) #speed of animasyooon
+			#self.speed(10) # Speed of animation
 			self.penup()
 			self.color(color)
-			# self.fd(0) #for mac
+			#self.fd(0) # for mac
 			self.goto(startx, starty)
 			self.speed = 5  # Reduce the speed of the sprite
 			
@@ -102,7 +107,6 @@ def start_game1():
 		def decelerate(self):
 			if self.speed > 0 :
 				self.speed -= 1
-
 			
 		def hyperspace(self):
 			play_hyperspace_sound()
@@ -145,8 +149,7 @@ def start_game1():
 			self.setheading(random.randint(0,360))
 			
 		def move(self):
-			self.fd(self.speed) #otomatik olarak atanması için koyduk
-			
+			self.fd(self.speed) # Otomatik olarak atanması için koyduk
 			degrees = random.randint(20, 60)
 			
 			if self.xcor() < -290:
@@ -188,7 +191,8 @@ def start_game1():
 		def move(self):
 			if self.status == "ready":
 				self.hideturtle()
-				#Move the turtle offscreen
+
+				# Move the turtle offscreen
 				self.goto(-1000	,1000)
 			
 			if self.status == "shoot":
@@ -199,13 +203,13 @@ def start_game1():
 			
 			if self.status == "firing":
 				self.fd(self.speed)
-				
 			
-			#Border Check	
+			# Border Check	
 			if self.xcor() < -290 or self.xcor() > 290 \
 				or self.ycor() < -290 or self.ycor() > 290:
 				self.status = "ready"			
 				
+
 	class Particle(Sprite):
 		def __init__(self, spriteshape, color, startx, starty):
 			Sprite.__init__(self, spriteshape, color, -1000, -1000)
@@ -218,7 +222,6 @@ def start_game1():
 			self.setheading(random.randint(0, 360))
 			self.frame = 1
 
-			
 		def move(self):
 			if self.frame != 0:
 				self.fd(18-self.frame)
@@ -235,7 +238,8 @@ def start_game1():
 					self.frame = 0
 					self.goto(-1000, -1000)
 					turtle.tracer(6)
-							
+
+
 	class Game():
 		def __init__(self):
 			self.level = 1
@@ -247,7 +251,7 @@ def start_game1():
 			self.enemies = []
 			
 		def draw_border(self):
-			#Draw Border
+			# Draw Border
 			self.pen.speed(0)
 			self.pen.color("white")
 			self.pen.pensize(3)
@@ -271,7 +275,7 @@ def start_game1():
 
 		def check_level_up(self):
 			if self.level < len(self.level_thresholds) and self.score >= self.level_thresholds[self.level - 1]:
-				# Önceki leveldeki düşmanların rengini beyaz yap
+				# Önceki leveldeki düşmanların rengini gri yap
 				for enemy in self.enemies:
 					enemy.color("gray")
 				
@@ -291,36 +295,40 @@ def start_game1():
 				y = random.randint(-200, 200)
 				self.enemies.append(Enemy("circle", "red", x, y))
 
-	#Create game object
+
+	# - START THE GAME - 
+
+	# Create game object
 	game = Game()
 
-	#Draw the game border
+	# Draw the game border
 	game.draw_border()
 
-	#Show the level and score
+	# Show the level and score
 	game.show_status()
 
-	#Create player and enemy objects
+	# Create player and enemy objects
 	player = Player("triangle", "white", 0.0, 0.0)
 	#enemy = Enemy("circle", "red", 100.0, 0.0)
 	bullet = Bullet("triangle", "yellow", 0.0, 0.0)
 	#ally = Ally("square", "blue", 100, 100)
 
-	#klavye ataması
+	# Klavye ataması
 	turtle.onkey(player.turn_left, "Left")
 	turtle.onkey(player.turn_right, "Right")
 	turtle.onkey(player.accelerate, "Up")
 	turtle.onkey(player.decelerate, "Down")
 	turtle.onkey(bullet.fire, "space")
 	turtle.listen()
+	
 
-	#Set up the game
-	#Create lists for sprites
-	#Add Enemies
+	# Set up the game
+	# Create lists for sprites
+	# Add Enemies
 	if game.state == "splash":
 		game.add_enemies()  # Initialize enemies based on the level
 
-		#Add Allies
+		# Add Allies
 		allies = []
 		for a in range(6):
 			x = random.randint(-200, 200)
@@ -346,7 +354,6 @@ def start_game1():
 			player.speed = 0
 			player.goto(0,0)
 			player.setheading(0)
-
 			game.add_enemies()  # Reinitialize enemies based on the level
 
 			for ally in allies:
@@ -391,14 +398,14 @@ def start_game1():
 			for ally in allies:
 				ally.move()
 				
-				#Avoid enemy
+				# Avoid enemy
 				for enemy in game.enemies:	
 					ally.avoid(enemy)
 				
-				#Allies should avoid player as well	
+				# Allies should avoid player as well	
 				ally.avoid(player)
 		
-				#Check collisions
+				# Check collisions
 				if bullet.is_collision(ally):
 					for particle in particles:
 						particle.explode(ally.xcor(), ally.ycor())
@@ -420,10 +427,7 @@ def start_game1():
 				exit()
 
 
-
-
-
-# - ANA MENÜ BAŞLANGICI -
+# - START OF MAIN MENU -
 
 # Menü ekranını oluştur
 menu_screen = turtle.Screen()
@@ -467,10 +471,8 @@ def start_game():
     option_1.clear()
     option_2.clear()
     menu_screen.bgcolor("blue")
-    
     start_game1()
     turtle.done()
-
 
 def exit_game():
     menu_screen.bye()  # Turtle ekranını kapatır
@@ -483,8 +485,4 @@ menu_screen.onkey(exit_game, "2")  # "2" tuşuna basıldığında oyundan çıka
 # Ekranı açık tut
 menu_screen.mainloop()
 
-
-# - ANA MENÜ BİTİŞİ -
-
-
-
+# - END OF MAIN MENU -
