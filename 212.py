@@ -8,13 +8,11 @@ pygame.mixer.init()
 #ses dosyaları
 explosion_sound = pygame.mixer.Sound("explosion.mp3")
 hyperspace_sound = pygame.mixer.Sound("hyperspace.mp3")
-laser_sound = pygame.mixer.Sound("laser.mp3")
+laser_sound = pygame.mixer.Sound("laser_V2.mp3")
 missile_sound = pygame.mixer.Sound("missile.mp3")
 menu_music = pygame.mixer.Sound("menu_intro.mp3")
 menu_music.play(1)
 menu_music.set_volume(0.1) #sesi kıstım
-
-
 
 
 
@@ -38,7 +36,7 @@ def start_game1():
 	#Change the background color of the screen
 	turtle.bgcolor("black")
 	#Load the background image
-	turtle.bgpic("starfield.gif")
+	turtle.bgpic("menu_V3.png")
 	#Hide the turtle
 	turtle.ht()
 	#Set the undo buffer to 1 (to save memory and speed things up)
@@ -89,7 +87,7 @@ def start_game1():
 		def __init__(self, spriteshape, color, startx, starty):
 			Sprite.__init__(self, spriteshape, color, startx, starty)
 			self.speed = 0
-			self.health = 3
+			self.health = 4
 			self.shapesize(stretch_wid=0.6, stretch_len=1.1, outline=None)
 			
 		def turn_left(self):
@@ -244,9 +242,8 @@ def start_game1():
 			self.score = 0
 			self.state = "splash"
 			self.pen = turtle.Turtle()
-			self.health = 500
-			# self.level_thresholds = [300, 800, 1200, 1700]  # Define score thresholds for levels
-			self.level_thresholds = [100, 300, 1200, 1700] # dev environment
+			self.health = 4
+			self.level_thresholds = [400, 800, 1200, 2000]
 			self.enemies = []
 			
 		def draw_border(self):
@@ -282,6 +279,9 @@ def start_game1():
 				self.show_status()
 				messagebox.showinfo("Level Up", f"Welcome to Level {self.level}!")
 				self.add_enemies()  # Yeni levelde yeni düşmanları ekle
+			if self.score >= 3000:
+				self.state = "gameover"
+				messagebox.showinfo("Congratulations!", "You have reached 3000 points and won the game!")
 
 		def add_enemies(self):
 			num_enemies = self.level * 3
@@ -341,7 +341,7 @@ def start_game1():
 	while True:
 		turtle.update()
 		if game.state == "restart":
-			game.health = 3
+			game.health = 4
 			game.score = 0
 			player.speed = 0
 			player.goto(0,0)
@@ -357,7 +357,7 @@ def start_game1():
 		if game.state == "playing":
 			player.move()
 			bullet.move()
-			game.check_level_up()  # Check if the player has leveled up
+			game.check_level_up()  # Check if the player has leveled up or won the game
 		
 			for enemy in game.enemies:	
 				enemy.move()
