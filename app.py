@@ -6,11 +6,11 @@ import pygame #sesleri eklmeke için kullandım
 pygame.mixer.init() 
 
 #ses dosyaları
-explosion_sound = pygame.mixer.Sound("explosion.mp3")
-hyperspace_sound = pygame.mixer.Sound("hyperspace.mp3")
-laser_sound = pygame.mixer.Sound("laser_V2.mp3")
-missile_sound = pygame.mixer.Sound("missile.mp3")
-menu_music = pygame.mixer.Sound("menu_intro.mp3")
+explosion_sound = pygame.mixer.Sound("assets/sounds/explosion.mp3")
+hyperspace_sound = pygame.mixer.Sound("assets/sounds/hyperspace.mp3")
+laser_sound = pygame.mixer.Sound("assets/sounds/laser_V2.mp3")
+missile_sound = pygame.mixer.Sound("assets/sounds/missile.mp3")
+menu_music = pygame.mixer.Sound("assets/sounds/menu_intro.mp3")
 menu_music.play(1)
 menu_music.set_volume(0.1) #sesi kıstım
 
@@ -36,7 +36,7 @@ def start_game1():
 	#Change the background color of the screen
 	turtle.bgcolor("black")
 	#Load the background image
-	turtle.bgpic("menu_V3.png")
+	turtle.bgpic("assets/images/menu_V3.png")
 	#Hide the turtle
 	turtle.ht()
 	#Set the undo buffer to 1 (to save memory and speed things up)
@@ -427,7 +427,7 @@ def start_game1():
 
 # Menü ekranını oluştur
 menu_screen = turtle.Screen()
-menu_screen.title("Alt+F4")
+menu_screen.title("Alt-F4")
 menu_screen.bgcolor("black")
 menu_screen.setup(width=600, height=600)
 
