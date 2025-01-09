@@ -11,6 +11,7 @@ hyperspace_sound = pygame.mixer.Sound("assets/sounds/hyperspace.mp3")
 laser_sound = pygame.mixer.Sound("assets/sounds/laser_V2.mp3")
 missile_sound = pygame.mixer.Sound("assets/sounds/missile.mp3")
 menu_music = pygame.mixer.Sound("assets/sounds/menu_intro.mp3")
+
 menu_music.play(1)
 menu_music.set_volume(0.1) # Sesi kısıldı
 
